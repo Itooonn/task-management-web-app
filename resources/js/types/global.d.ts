@@ -15,3 +15,5 @@ declare module '@inertiajs/core' {
 declare global {
     var route: typeof route;
 }
+
+role: string;

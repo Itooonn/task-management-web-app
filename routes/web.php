@@ -4,6 +4,8 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
+use App\Http\Controllers\UserController;
+
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -26,6 +28,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
 
      Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
+
+    Route::get('/users', [UserController::class, 'index'])
+        ->name('users.index');
 });
 
 
