@@ -1,5 +1,5 @@
-import type { Auth } from '@/types/auth';
 import route from 'ziggy-js';
+import type { Auth } from '@/types/auth';
 
 declare module '@inertiajs/core' {
     export interface InertiaConfig {
@@ -16,4 +16,4 @@ declare global {
     var route: typeof route;
 }
 
-role: string;
+string;

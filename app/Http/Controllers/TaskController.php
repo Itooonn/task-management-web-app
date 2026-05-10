@@ -10,7 +10,10 @@ class TaskController extends Controller
 {
     public function index()
     {
-        $tasks = Task::orderBy('is_completed', 'asc')->get();
+        // $tasks = Task::orderBy('is_completed', 'asc')->get();
+        $tasks = Task::where('user_id', auth()->id())
+            ->orderBy('is_completed', 'asc')
+            ->get();
 
         return Inertia::render('Tasks/index', compact('tasks'));
     }
@@ -30,6 +33,7 @@ class TaskController extends Controller
         ]);
 
         Task::create([
+            'user_id' => auth()->id(),
             'title' => $request->title,
             'description' => $request->description,
             'due_date' => $request->due_date,

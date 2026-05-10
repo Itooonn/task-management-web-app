@@ -1,6 +1,15 @@
-import { Link, router } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
+import { SquarePen, Trash } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Trash, SquarePen } from 'lucide-react';
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from '@/components/ui/table';
 
 type User = {
     id: number;
@@ -17,58 +26,117 @@ export default function Index({ users }: { users: User[] }) {
     };
 
     return (
-        <div className="p-6">
-            <div className="mb-6 flex items-center justify-between">
-                <h1 className="text-3xl font-bold">User Management</h1>
+        <>
+            <Head title="User Management" />
 
-                <Link href="/users/create">
-                    <Button>Create User</Button>
-                </Link>
-            </div>
+            <div className="flex h-full flex-1 flex-col gap-1.5 overflow-x-auto rounded-xl p-4">
+                <div className="m-2 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex flex-col gap-2">
+                        <h1 className="text-3xl font-bold tracking-tight">
+                            User Management
+                        </h1>
+                        <p className="text-sm text-muted-foreground">
+                            Create, update, and manage application accounts.
+                        </p>
+                    </div>
 
-            <div className="overflow-hidden rounded-lg border border-gray-700">
-                <table className="w-full">
-                    <thead className="bg-gray-900">
-                        <tr>
-                            <th className="p-4 text-left">Name</th>
-                            <th className="p-4 text-left">Email</th>
-                            <th className="p-4 text-left">Role</th>
-                            <th className="p-4 text-center">Actions</th>
-                        </tr>
-                    </thead>
+                    <div className="m-2 flex justify-end">
+                        <Button asChild>
+                            <Link href="/users/create">Create User</Link>
+                        </Button>
+                    </div>
+                </div>
 
-                    <tbody>
-                        {users.map((user) => (
-                            <tr
-                                key={user.id}
-                                className="border-t border-gray-700"
-                            >
-                                <td className="p-4">{user.name}</td>
+                <div className="m-4 flex flex-1 flex-col">
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead className="px-4">Name</TableHead>
+                                <TableHead className="px-4">Email</TableHead>
+                                <TableHead className="px-4">Role</TableHead>
+                                <TableHead className="px-4 text-center">
+                                    Actions
+                                </TableHead>
+                            </TableRow>
+                        </TableHeader>
 
-                                <td className="p-4">{user.email}</td>
+                        <TableBody>
+                            {users.length > 0 ? (
+                                users.map((user) => (
+                                    <TableRow key={user.id}>
+                                        <TableCell className="px-4 font-medium">
+                                            {user.name}
+                                        </TableCell>
+                                        <TableCell className="px-4 text-muted-foreground">
+                                            {user.email}
+                                        </TableCell>
+                                        <TableCell className="px-4">
+                                            <Badge
+                                                variant={
+                                                    user.role === 'admin'
+                                                        ? 'default'
+                                                        : 'secondary'
+                                                }
+                                                className="capitalize"
+                                            >
+                                                {user.role}
+                                            </Badge>
+                                        </TableCell>
 
-                                <td className="p-4">{user.role}</td>
+                                        <TableCell className="px-4 text-center">
+                                            <div className="flex justify-center gap-2">
+                                                <Button
+                                                    asChild
+                                                    size="icon"
+                                                    variant="outline"
+                                                    className="bg-blue-500 hover:bg-blue-600"
+                                                    aria-label={`Edit ${user.name}`}
+                                                >
+                                                    <Link
+                                                        href={`/users/${user.id}/edit`}
+                                                    >
+                                                        <SquarePen className="h-4 w-4" />
+                                                    </Link>
+                                                </Button>
 
-                                <td className="space-x-2 p-4 text-center">
-                                    <Link href={`/users/${user.id}/edit`}>
-                                        <Button size="sm">
-                                            <SquarePen className="h-4 w-4" />
-                                        </Button>
-                                    </Link>
-
-                                    <Button
-                                        size="sm"
-                                        variant="destructive"
-                                        onClick={() => handleDelete(user.id)}
+                                                <Button
+                                                    size="icon"
+                                                    variant="outline"
+                                                    className="bg-red-500 hover:bg-red-600"
+                                                    aria-label={`Delete ${user.name}`}
+                                                    onClick={() =>
+                                                        handleDelete(user.id)
+                                                    }
+                                                >
+                                                    <Trash className="h-4 w-4" />
+                                                </Button>
+                                            </div>
+                                        </TableCell>
+                                    </TableRow>
+                                ))
+                            ) : (
+                                <TableRow>
+                                    <TableCell
+                                        colSpan={4}
+                                        className="h-24 text-center text-muted-foreground"
                                     >
-                                        <Trash className="h-4 w-4" />
-                                    </Button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                                        No users found.
+                                    </TableCell>
+                                </TableRow>
+                            )}
+                        </TableBody>
+                    </Table>
+                </div>
             </div>
-        </div>
+        </>
     );
 }
+
+Index.layout = {
+    breadcrumbs: [
+        {
+            title: 'User Management',
+            href: '/users',
+        },
+    ],
+};

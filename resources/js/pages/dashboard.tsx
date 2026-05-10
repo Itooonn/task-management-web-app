@@ -1,6 +1,6 @@
 import { Head, Link, usePage } from '@inertiajs/react';
-import { dashboard } from '@/routes';
 import { Button } from '@/components/ui/button';
+import { dashboard } from '@/routes';
 
 interface DashboardProps {
     completedCount: number;
