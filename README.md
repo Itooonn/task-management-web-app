@@ -26,7 +26,42 @@ TaskFlow is a simple task management system designed to help users organize and 
 - Responsive UI design
 - Clean and minimal interface
 
+## 🔐 Default Admin Access for testing
+
+1. **Open terminal and use the command:**
+    ```
+    php artisan tinker
+    ```
+2. **Copy and paste this:**
+    ```
+    use App\Models\User;
+    use Illuminate\Support\Facades\Hash;
+    
+    User::create([
+        'name' => 'Admin',
+        'email' => 'admin@example.com',
+        'password' => Hash::make('password'),
+        'role' => 'admin',
+    ]);
+    ```
+1. **Credentials**
+    ```
+    Email: admin@example.com
+    Password: password
+    ```
+
 ## 📸 UI Previews
 
-/assets/images/1.png
+![Alt Text](/assets/images/1.png)
 
+![Alt Text](/assets/images/2.png)
+
+![Alt Text](/assets/images/3.png)
+
+![Alt Text](/assets/images/4.png)
+
+![Alt Text](/assets/images/5.png)
+
+![Alt Text](/assets/images/6.png)
+
+![Alt Text](/assets/images/7.png)
