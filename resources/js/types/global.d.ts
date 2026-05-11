@@ -1,3 +1,4 @@
+import route from 'ziggy-js';
 import type { Auth } from '@/types/auth';
 
 declare module '@inertiajs/core' {
@@ -10,3 +11,9 @@ declare module '@inertiajs/core' {
         };
     }
 }
+
+declare global {
+    var route: typeof route;
+}
+
+string;
