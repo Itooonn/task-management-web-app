@@ -5,6 +5,7 @@ import {
     ChevronRight,
     Trash,
     SquarePen,
+    CircleCheckBig,
 } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -238,7 +239,22 @@ export default function Index() {
                                                     <SquarePen className="h-4 w-4" />
                                                 </Button>
                                             </Link>
-
+                                            <Button
+                                                variant="outline"
+                                                size="sm"
+                                                className={
+                                                    task.is_completed
+                                                        ? 'bg-green-500 hover:bg-green-600'
+                                                        : 'bg-yellow-500 hover:bg-yellow-600'
+                                                }
+                                                onClick={() =>
+                                                    router.patch(
+                                                        `/tasks/${task.id}/complete`,
+                                                    )
+                                                }
+                                            >
+                                                <CircleCheckBig className="h-4 w-4" />
+                                            </Button>
                                             <Button
                                                 disabled={processing}
                                                 onClick={() =>

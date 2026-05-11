@@ -73,4 +73,18 @@ class TaskController extends Controller
 
         return redirect()->route('tasks.index')->with('message', 'Task deleted successfully.');
     }
+
+    public function toggleComplete(Task $task)
+    {
+        $task->update([
+            'is_completed' => !$task->is_completed,
+        ]);
+
+        return back()->with(
+            'message',
+            $task->is_completed
+                ? 'Task marked as completed.'
+                : 'Task marked as pending.'
+        );
+    }
 }

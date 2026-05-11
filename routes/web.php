@@ -50,6 +50,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::delete('/users/{user}', [UserController::class, 'destroy'])
         ->name('users.destroy');
+
+    Route::patch('/tasks/{task}/complete', [TaskController::class, 'toggleComplete']);
 });
 
 
